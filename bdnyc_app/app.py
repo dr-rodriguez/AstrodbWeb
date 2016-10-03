@@ -124,7 +124,7 @@ def bdnyc_send_to_samp():
 
     # Connect to the SAMP Hub (started by TOPCAT or others)
     from astropy.vo.samp import SAMPIntegratedClient
-    client = SAMPIntegratedClient()
+    client = SAMPIntegratedClient(name='AstrodbWeb')
     client.connect()
 
     # Prepare parameters

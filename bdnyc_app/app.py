@@ -128,8 +128,13 @@ def bdnyc_send_to_samp():
     client.connect()
 
     # Prepare parameters
+    if '0.0.0.0' in request.url_root:
+        full_path = 'file:///' + os.getcwd() + '/' + filename
+    else:
+        full_path = request.url_root + filename
+
     params = dict()
-    params["url"] = request.url_root + filename
+    params["url"] = full_path
     params["name"] = "BDNYC Query"
 
     # Prepare message
@@ -140,9 +145,9 @@ def bdnyc_send_to_samp():
     # Send message
     client.notify_all(message)
 
-    # Delete the file after it's read and disconnect from Hub
-    os.remove(filename)
+    # Disconnect from Hub, delete the file
     client.disconnect()
+    os.remove(filename)
 
     # Return no content
     return ('', 204)

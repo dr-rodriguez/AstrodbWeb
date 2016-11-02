@@ -157,6 +157,7 @@ def sampfile():
     os.remove(filename)  # Delete the file after it's read
 
     response = make_response(file_as_string)
+    response.headers["Content-Disposition"] = "inline"
     return response
 
 

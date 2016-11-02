@@ -117,21 +117,14 @@ def bdnyc_savefile():
 
 @app_bdnyc.route('/send_samp', methods=['POST'])
 def bdnyc_send_to_samp():
-    filename = 'bdnyc_table.vot'
-
-    db = astrodb.Database('./database.db')
-    db.query(app_bdnyc.vars['query'], fmt='table', export=filename)
-
     # Connect to the SAMP Hub (started by TOPCAT or others)
     from astropy.vo.samp import SAMPIntegratedClient
     client = SAMPIntegratedClient(name='AstrodbWeb')
     client.connect()
 
     # Prepare parameters
-    if '0.0.0.0' in request.url_root:
-        full_path = 'file:///' + os.getcwd() + '/' + filename
-    else:
-        full_path = request.url_root + filename
+    full_path = request.url_root + 'samp_data'
+    print(full_path)
 
     params = dict()
     params["url"] = full_path
@@ -147,10 +140,25 @@ def bdnyc_send_to_samp():
 
     # Disconnect from Hub, delete the file
     client.disconnect()
-    os.remove(filename)
 
     # Return no content
     return ('', 204)
+
+
+@app_bdnyc.route('/samp_data', methods=['POST', 'GET'])
+def sampfile():
+    # Save and load the query as a VOTable
+    filename = 'bdnyc_table.vot'
+    db = astrodb.Database('./database.db')
+    db.query(app_bdnyc.vars['query'], fmt='table', export=filename, use_converters=False)
+
+    with open(filename, 'r') as f:
+        file_as_string = f.read()
+    os.remove(filename)  # Delete the file after it's read
+
+    response = make_response(file_as_string)
+    return response
+
 
 # Perform a search
 @app_bdnyc.route('/search', methods=['POST'])

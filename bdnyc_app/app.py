@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, make_response
+from flask.ext.cors import CORS, cross_origin
 import astrodbkit
 from astrodbkit import astrodb
 import os
@@ -16,6 +17,9 @@ from math import sqrt
 import numpy as np
 
 app_bdnyc = Flask(__name__)
+
+cors = CORS(app_bdnyc)
+app_bdnyc.config['CORS_HEADERS'] = 'Content-Type'
 
 app_bdnyc.vars = dict()
 app_bdnyc.vars['query'] = ''
@@ -146,6 +150,7 @@ def bdnyc_send_to_samp():
 
 
 @app_bdnyc.route('/samp_data', methods=['POST', 'GET'])
+@cross_origin()
 def sampfile():
     # Save and load the query as a VOTable
     filename = 'bdnyc_table.vot'
@@ -158,6 +163,7 @@ def sampfile():
 
     response = make_response(file_as_string)
     response.headers["Content-Disposition"] = "inline"
+    # TODO: Does not work in Heroku; find alternative, perhaps Flask-CORS?
     return response
 
 

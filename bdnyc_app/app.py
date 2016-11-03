@@ -121,9 +121,12 @@ def bdnyc_savefile():
 @app_bdnyc.route('/send_samp', methods=['POST'])
 def bdnyc_send_to_samp():
     # Connect to the SAMP Hub (started by TOPCAT or others)
+    # Documentation: http://www.ivoa.net/documents/SAMP/20120411/REC-SAMP-1.3-20120411.html
+
     from astropy.vo.samp import SAMPIntegratedClient
     client = SAMPIntegratedClient(name='AstrodbWeb')
     client.connect()
+    # TODO: This may need to be updated re: sections 5.2.2 and 3.11 of the documentation for use online
 
     # Prepare parameters
     full_path = request.url_root + 'samp_data'

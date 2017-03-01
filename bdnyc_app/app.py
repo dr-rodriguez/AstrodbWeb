@@ -479,8 +479,10 @@ def bdnyc_browse():
     spec_counts.columns = ['<span title="Amount of spectroscopic observations available">Spectroscopy</span>']
 
     final_data = pd.concat([data, phot_counts, spec_counts], axis=1, join='outer')
-    final_data['<span title="Amount of photometry data available">Photometry</span>'].fillna(value=0, inplace=True)
-    final_data['<span title="Amount of spectroscopic observations available">Spectroscopy</span>'].fillna(value=0, inplace=True)
+    cols_to_edit = ['<span title="Amount of photometry data available">Photometry</span>',
+                    '<span title="Amount of spectroscopic observations available">Spectroscopy</span>']
+    for col in cols_to_edit:
+        final_data[col] = final_data[col].fillna(value=0).apply(int)
 
     return render_template('browse.html', table=final_data.to_html(classes='display', index=False, escape=False))
 

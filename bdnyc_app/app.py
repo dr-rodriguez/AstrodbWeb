@@ -451,7 +451,10 @@ def bdnyc_browse():
     # Change column to a link
     linklist = []
     for i, elem in enumerate(zip(data['shortname'], data['names'])):
-        link = '<a href="summary/{0}">{1}<span>{2}</span></a>'.format(data.iloc[i]['id'], elem[0], elem[1])
+        if isinstance(elem[1], type(None)) or elem[1] == '':
+            link = '<a href="summary/{0}">{1}</a>'.format(data.iloc[i]['id'], elem[0])
+        else:
+            link = '<a href="summary/{0}">{1}<span>{2}</span></a>'.format(data.iloc[i]['id'], elem[0], elem[1])
         linklist.append(link)
     data['shortname'] = linklist
 

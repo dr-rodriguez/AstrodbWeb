@@ -174,7 +174,8 @@ def bdnyc_plot():
     sys.stdout = stdout
 
     # Check for errors first
-    if mystdout.getvalue().lower().startswith('could not execute') or isinstance(t['spectrum'], type(u'')):
+    if mystdout.getvalue().lower().startswith('could not execute') or isinstance(t['spectrum'], type(u'')) \
+            or isinstance(t['spectrum'], type('')):
         return render_template('error.html', headermessage='Error in Query',
                                errmess='<p>Error in query:</p><p>'+mystdout.getvalue().replace('<', '&lt;')+'</p>')
 
@@ -191,8 +192,15 @@ def bdnyc_plot():
     tools = "resize,crosshair,pan,wheel_zoom,box_zoom,reset"
 
     # create a new plot
-    wav = 'Wavelength ('+t['wavelength_units']+')'
-    flux = 'Flux ('+t['flux_units']+')'
+    try:
+        wav = 'Wavelength ('+t['wavelength_units']+')'
+    except TypeError:
+        wav = 'Wavelength'
+    try:
+        flux = 'Flux ('+t['flux_units']+')'
+    except TypeError:
+        flux = 'Flux'
+
     # can specify plot_width if needed
     p = figure(tools=tools, title=shortname, x_axis_label=wav, y_axis_label=flux, plot_width=800)
 

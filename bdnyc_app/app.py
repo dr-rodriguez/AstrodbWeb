@@ -174,7 +174,7 @@ def bdnyc_plot():
     sys.stdout = stdout
 
     # Check for errors first
-    if mystdout.getvalue().lower().startswith('could not execute'):
+    if mystdout.getvalue().lower().startswith('could not execute') or isinstance(t['spectrum'], type(u'')):
         return render_template('error.html', headermessage='Error in Query',
                                errmess='<p>Error in query:</p><p>'+mystdout.getvalue().replace('<', '&lt;')+'</p>')
 

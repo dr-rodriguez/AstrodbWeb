@@ -274,11 +274,16 @@ def bdnyc_summary(source_id):
 
     # Grab object information
     objname = t['sources']['designation'][0]
-    ra = t['sources']['ra'][0]
-    dec = t['sources']['dec'][0]
-    c = SkyCoord(ra=ra * u.degree, dec=dec * u.degree)
-    coords = c.to_string('hmsdms', sep=':', precision=2)
     allnames = t['sources']['names'][0]
+
+    # Grab ra,dec if present
+    try:
+        ra = t['sources']['ra'][0]
+        dec = t['sources']['dec'][0]
+        c = SkyCoord(ra=ra * u.degree, dec=dec * u.degree)
+        coords = c.to_string('hmsdms', sep=':', precision=2)
+    except TypeError:
+        coords = ''
 
     # Grab distance
     try:

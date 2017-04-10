@@ -11,7 +11,8 @@ Running a local version of this application is easy, just run:
 ```
 python runapp.py
 ```
-and navigate to the indicated URL.
+and navigate to the indicated URL.  
+**NOTE:** AstrodbWeb only works with Python 2.7, so you may want to create a specific environment for this app.
 
 A live version of this app can be found [here](http://database.bdnyc.org) with a backup available at [Heroku](http://bdnyc-app.herokuapp.com/).
 

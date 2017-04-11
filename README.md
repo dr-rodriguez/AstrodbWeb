@@ -4,6 +4,10 @@ This web application allows you to query the BDNYC database ([Filippazzo et al. 
 It uses the [astrodbkit](https://github.com/BDNYC/astrodbkit) python package to perform queries and returns tables in [JQuery-DataTable](http://datatables.net/) format and 
 figures created with [Bokeh](http://bokeh.pydata.org/en/latest/). [Aladin Lite](http://aladin.u-strasbg.fr/AladinLite/doc/) is used to generate finder charts in the Summary pages.  
 
+# Using
+
+AstrodbWeb only works with **Python 2.7**, so you may want to create a specific environment for this app.
+
 This code can be downloaded or forked for use with your own SQL database. 
 You will want to modify the static and template HTML files to use your styling and 
 remove the Google Analytics tracking information from ours. 
@@ -12,7 +16,6 @@ Running a local version of this application is easy, just run:
 python runapp.py
 ```
 and navigate to the indicated URL.  
-**NOTE:** AstrodbWeb only works with Python 2.7, so you may want to create a specific environment for this app.
 
 A live version of this app can be found [here](http://database.bdnyc.org) with a backup available at [Heroku](http://bdnyc-app.herokuapp.com/).
 

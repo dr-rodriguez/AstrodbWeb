@@ -44,10 +44,16 @@ def bdnyc_query():
     t = db.query('SELECT id FROM sources', fmt='table')
     bd_num = len(t)
 
+    # Get the latest changelog date
+    try:
+        changelog_date = db.query("SELECT date FROM changelog ORDER BY id DESC LIMIT 1", fmt='array', fetch='one')[0]
+    except:
+        changelog_date = '2015'
 
     return render_template('query.html', defquery=app_bdnyc.vars['query'],
                            defsearch=app_bdnyc.vars['search'], specid=app_bdnyc.vars['specid'],
-                           source_id=app_bdnyc.vars['source_id'], bd_num=bd_num, version=astrodbkit.__version__)
+                           source_id=app_bdnyc.vars['source_id'], bd_num=bd_num, version=astrodbkit.__version__,
+                           changelog_date=changelog_date)
 
 
 # Grab results of query and display them

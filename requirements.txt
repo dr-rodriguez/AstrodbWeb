@@ -1,4 +1,4 @@
-astrodbkit==0.5.2
+astrodbkit>=0.5.2
 astropy==1.2.1
 numpy==1.11.1
 pandas==0.17.1

@@ -48,7 +48,7 @@ def bdnyc_query():
     try:
         changelog_date = db.query("SELECT date FROM changelog ORDER BY id DESC LIMIT 1", fmt='array', fetch='one')[0]
     except:
-        changelog_date = '2015'
+        changelog_date = db.query("SELECT date_published FROM versions ORDER BY id DESC LIMIT 1", fmt='array', fetch='one')[0]
 
     return render_template('query.html', defquery=app_bdnyc.vars['query'],
                            defsearch=app_bdnyc.vars['search'], specid=app_bdnyc.vars['specid'],
